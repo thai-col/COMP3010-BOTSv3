@@ -197,14 +197,17 @@ Identifying that files that have been uploaded to the public bucket suggests mor
 What is the FQDN of the endpoint that is running a different Windows operating system edition than the others?
 
 **Objective:**
-
+The objective of this tasks is to fing the FQDN (Fully qualified domain name) of the host that is using a differing operating system to the others.
 
 **Method:**
-
+Multiple queries are used to find this information. First, setting the source type to **WinHostMon**, which gathers information and statistics about the hosts and filtering for the OS of each corresponding host revieled one outlier. BSTOLL-L was using windows 10 enterprise vs windows 10 professional. So, by looking for the "**Computer**" name of the host **BSTOLL-L** the FQDN can be found.
 **Query:**
 ```spl
-index=botsv3 sourcetype="aws:s3:accesslogs" "frothlywebcode" http_status=200
-operation="REST.PUT.OBJECT"
+index=botsv3 sourcetype="WinHostMon"
+| stats count by os host
+```
+```spl
+index=botsv3 host="BSTOLL-L" "computer-name"
 ```
 <p align="center">
   <img src="screenshots/Question_8_Query_Result.png" width="700">
@@ -213,7 +216,7 @@ operation="REST.PUT.OBJECT"
 </p>
 
 **Findings:**
-
+**BSTOLL-L.froth.ly** is the FQDN of the host that is using a different version of windows to all of the other hosts
 
 **SOC Relevance:**
-
+Identifying the outlier host give the SOC a point to start their investigation because the anomoly could suggest potentially higher risk. Furthermore, it could be a misconfiguration meaning a potentially increased security risk. Potetntially missing security groups and or policies. This SOC can also ask, did this host access the public bucket? upload or download files? Or generate any suspicious traffic?
