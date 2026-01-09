@@ -220,3 +220,15 @@ index=botsv3 host="BSTOLL-L" "computer-name"
 
 **SOC Relevance:**
 Identifying the outlier host give the SOC a point to start their investigation because the anomoly could suggest potentially higher risk. Furthermore, it could be a misconfiguration meaning a potentially increased security risk. Potetntially missing security groups and or policies. This SOC can also ask, did this host access the public bucket? upload or download files? Or generate any suspicious traffic?
+
+## Conclusion
+
+This report used the BOTSv3 dataset in Splunk to analyse activity within the
+Frothly environment. AWS CloudTrail logs were used to identify IAM user access
+and detect AWS API activity without multi-factor authentication, while host
+monitoring data was used to identify the hardware of the web servers.
+
+These findings demonstrate how different log sources can be used by a SOC
+analyst to monitor user activity, identify security risks, and understand
+system infrastructure.
+
